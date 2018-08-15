@@ -1,5 +1,5 @@
 import * as React from 'react';
-import 'small-weather.css';
+import './smallWeather.css';
 
 /**
  *  TODO: It should show temp, and small weather icon
@@ -7,21 +7,25 @@ import 'small-weather.css';
  * from parent component.
  * Switch between C and F.
  */ 
-export interface SmallWeatherProps { 
-    icon: string;
-    temp: string;
-    date: Date;
+export interface ISmallWeatherProps { 
+    iconSrc: string;
+    temp: number;
+    date: number;
 }
 
 // 'HelloProps' describes the shape of props.
 // State is never set so we use the '{}' type.
-export default class SmallWeather extends React.Component<SmallWeatherProps, {}> {
-    render(){
+export default class SmallWeather extends React.Component<any, {}> {
+    // constructor(props: any){
+    //     super(props);
+    // }
+    
+    public render(){
         return(
             <div className="small-weather">
-                <img src={this.props.icon}/>
-                <p>{this.props.temp}C</p>
-                <p>{this.props.date}</p>
+                <img src={this.props.data.iconSrc}/>
+                <p>{this.props.data.temp}C</p>
+                <p>{this.props.data.date}</p>
             </div>
         ); // return()
     }// render()
