@@ -23,9 +23,11 @@ export default class SmallWeather extends React.Component<any, {}> {
     public render(){
         return(
             <div className="small-weather">
-                <img src={this.props.data.iconSrc}/>
-                <p>{this.props.data.temp}C</p>
-                <p>{this.props.data.date}</p>
+                <img className="small-weather-img" src={this.props.data.iconSrc}/>
+                <div className="small-weather-metric">
+                    <p className="small-weather-temp">{this.props.data.temp}</p>
+                    <p className="small-weather-date">{this.props.data.date}</p>
+                </div>
             </div>
         ); // return()
     }// render()
