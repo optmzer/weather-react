@@ -1,16 +1,17 @@
-import * as Ma from '@material-ui/icons'
+/* tslint:disable:ordered-imports jsdoc-format completed-docs*/
+// React
+import * as Ma from '@material-ui/icons';
 import * as React from 'react';
 import './App.css';
-
+// local
+import drizzleDay from './img/weather-drizzle-day.png';
+import fewClouds from './img/weather-few-clouds.png';
+import * as service from './services/servicesAPI';
 import SmallWeather from './smallWeather/smallWeather';
 
-import clear from './img/weather-clear.png';
-import drizzleDay from "./img/weather-drizzle-day.png";
-import fewClouds from "./img/weather-few-clouds.png";
 
-
-// import SmallWeatherProps from './smallWeather/smallWeather';
-
+// this is working too.
+const iconURL = "http://openweathermap.org/img/w/10d.png";
 
 class App extends React.Component<any, any> {
   constructor(props: any){
@@ -28,19 +29,20 @@ class App extends React.Component<any, any> {
   public render() {
     // assemble options object for toLocaleTimeString() method
     const options = { 
-      day: 'numeric',
+      // day: 'numeric',
       hour12: false, 
-      month: 'short',
-      weekday: 'short',
-      year: 'numeric',
+      // month: 'short',
+      // weekday: 'short',
+      // year: 'numeric',
     }
+    service.getCity("Auckland");
     
     const timestamp = new Date(this.state.current_time).toLocaleTimeString("en-NZ", options);
 
     const data1 = {
       // Had to manually sort it in alphbet. order.
       date: this.state.current_time,
-      iconSrc: clear,
+      iconSrc: iconURL,
       temp: 45
     }
 
