@@ -1,62 +1,48 @@
-/* tslint:disable:ordered-imports jsdoc-format completed-docs*/
-// React
-import * as Ma from '@material-ui/icons';
-import * as React from 'react';
-import './App.css';
-// local
-import drizzleDay from './img/weather-drizzle-day.png';
-import fewClouds from './img/weather-few-clouds.png';
-import * as service from './services/servicesAPI';
-import SmallWeather from './smallWeather/smallWeather';
-
-
-// this is working too.
+/** javadoc */
+import { AccessTime } from "@material-ui/icons";
+import * as React from "react";
+import "./App.css";
+import drizzleDay from "./img/weather-drizzle-day.png";
+import fewClouds from "./img/weather-few-clouds.png";
+import { getCity } from "./services/servicesAPI";
+import SmallWeather from "./smallWeather/smallWeather";
+/** Blah blah */
 const iconURL = "http://openweathermap.org/img/w/10d.png";
 
 class App extends React.Component<any, any> {
-  constructor(props: any){
+  constructor(props: any) {
       super(props);
       this.state = {
         city_name: "Auckland",
         current_temp: 30,
-        current_time: Date.now()
-      }
+        current_time: Date.now(),
+      };
   }
-// Get data from API
-
-// Put data into
 
   public render() {
-    // assemble options object for toLocaleTimeString() method
-    const options = { 
-      // day: 'numeric',
-      hour12: false, 
-      // month: 'short',
-      // weekday: 'short',
-      // year: 'numeric',
-    }
-    service.getCity("Auckland");
-    
+    const options = {
+      hour12: false,
+    };
+
     const timestamp = new Date(this.state.current_time).toLocaleTimeString("en-NZ", options);
 
     const data1 = {
-      // Had to manually sort it in alphbet. order.
       date: this.state.current_time,
       iconSrc: iconURL,
-      temp: 45
-    }
+      temp: 45,
+    };
 
     const data2 = {
       date: this.state.current_time,
       iconSrc: drizzleDay,
-      temp: 28
-    }
+      temp: 28,
+    };
 
     const data3 = {
       date: this.state.current_time,
       iconSrc: fewClouds,
-      temp: 30
-    }
+      temp: 30,
+    };
 
     return (
       <div className="App">
@@ -67,10 +53,10 @@ class App extends React.Component<any, any> {
           <h3>{this.state.city_name}</h3>
           <p>{this.state.current_temp}<span>C|F</span></p>
           <div className="current-time">
-            <Ma.AccessTime className="current-time-icon"/>
+            <AccessTime className="current-time-icon"/>
             <span>{timestamp}</span>
           </div>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p>{getCity("Auckland")}</p>
         </div>
         <div className="grid-view">
           <SmallWeather data={data1}/>
