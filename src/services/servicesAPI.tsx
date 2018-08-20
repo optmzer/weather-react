@@ -31,7 +31,7 @@ export function getCity(cityName: string) {
   return uri;
 }
 
-export function getWeather(cityName: string): Promise<any> {
+export function getCurrentWeather(cityName: string): Promise<any> {
   const uri = url + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
   console.log("URI = ", uri);
   return fetch(uri, {

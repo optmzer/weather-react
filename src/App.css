@@ -1,3 +1,7 @@
+body {
+  width: 50%;
+}
+
 .App {
   text-align: center;
 }
@@ -8,7 +12,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 75px;
   padding: 20px;
   color: white;
 }

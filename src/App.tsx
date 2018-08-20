@@ -16,23 +16,27 @@ class App extends React.Component<any, any> {
   constructor(props: any) {
       super(props);
       this.state = {
-        city_name: "Auckland",
-        current_temp: 30,
+        celsius: "active", // default in Celsius
+        city_name: "Auckland", // default Auckland
+        current_temp_converted: "",
+        current_temp_kelvin: 0, // default from weather API in Kelvin
         current_time: Date.now(),
+        farenheit: "",
       };
 
-      this.getWeather();
+      this.getCurrentWeather();
   }
 
   // Get data from API
-  public getWeather = () => {
-    service.getWeather(this.state.city_name)
+  public getCurrentWeather = () => {
+    service.getCurrentWeather(this.state.city_name)
     .then(
       (res) => {
       // Put data into state log
       console.log("JSON.stringify(res) = ", JSON.stringify(res));
       this.setState({
-        current_temp: res.main.temp,
+        current_temp_converted: this.tempKelvineToCelsius(res.main.temp),
+        current_temp_kelvin: res.main.temp,
         current_time: res.dt,
         latitude: res.coord.lat,
         longitude: res.coord.lon,
@@ -43,6 +47,39 @@ class App extends React.Component<any, any> {
         console.log(err);
       },
     );
+  }
+
+  // Kelvin to Farenhaite
+  public tempKelvineToFahrenheit = (tempKelv: number): string => {
+    const Farenheit = (9 / 5 * (tempKelv - 273)) + 32;
+    return Farenheit.toFixed(2);
+  }
+
+  // Kelvine to Celsius
+  public tempKelvineToCelsius = (tempKelv: number): string => {
+    const Celsius = tempKelv - 273;
+    return Celsius.toFixed(2);
+  }
+
+  // Toggles temp between C and F.
+  public toggleTemp = (): void => {
+    if (this.state.celsius !== "active") {
+      this.setState(() => {
+        return {
+          celsius: "active",
+          current_temp_converted: this.tempKelvineToCelsius(this.state.current_temp_kelvin),
+          farenheit: "",
+        };
+      });
+    } else {
+      this.setState(() => {
+        return {
+          celsius: "",
+          current_temp_converted: this.tempKelvineToFahrenheit(this.state.current_temp_kelvin),
+          farenheit: "active",
+        };
+      });
+    }
   }
 
   public render() {
@@ -82,7 +119,13 @@ class App extends React.Component<any, any> {
         </header>
         <div className="mail-view">
           <h3>{this.state.city_name}</h3>
-          <p>{this.state.current_temp}<span>C|F</span></p>
+          <p>{this.state.current_temp_converted}
+            <span>
+              <a onClick={this.toggleTemp}>
+                <span className={this.state.celsius}> °C</span> | <span className={this.state.farenheit}>°F</span>
+              </a>
+            </span>
+          </p>
           <div className="current-time">
             <Ma.AccessTime className="current-time-icon"/>
             <span>{timestamp}</span>
