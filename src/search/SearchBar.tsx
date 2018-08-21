@@ -1,6 +1,5 @@
-// tslint:disable:no-console
-import { FormControl, IconButton, Input, InputLabel } from "@material-ui/core";
-// import TextField from "@material-ui/core/TextField";
+// tslint:disable:no-console jsx-no-multiline-js
+import { FormControl, IconButton, Input, InputAdornment, InputLabel } from "@material-ui/core";
 import { Cancel, Search } from "@material-ui/icons";
 import * as React from "react";
 
@@ -45,25 +44,25 @@ class SearchBar extends React.Component<any, any> {
                         type="text"
                         value={this.state.city_name}
                         onChange={this.onTextChange}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="Search"
+                                    onClick={this.handleClickSearch}
+                                    onMouseDown={this.handleMouseDownSearch}
+                                >
+                                    <Search />
+                                </IconButton>
+                                <IconButton
+                                    aria-label="Cancel"
+                                    onClick={this.handleClickCancel}
+                                    onMouseDown={this.handleMouseDownSearch}
+                                >
+                                    <Cancel />
+                                </IconButton>
+                            </InputAdornment>
+                        }
                     />
-                    <span>
-                        <IconButton
-                            aria-label="Search"
-                            onClick={this.handleClickSearch}
-                            onMouseDown={this.handleMouseDownSearch}
-                        >
-                            <Search />
-                        </IconButton>
-                    </span>
-                    <span>
-                        <IconButton
-                            aria-label="Cancel"
-                            onClick={this.handleClickCancel}
-                            onMouseDown={this.handleMouseDownSearch}
-                        >
-                            <Cancel />
-                        </IconButton>
-                    </span>
                 </FormControl>
             </div>
         );
