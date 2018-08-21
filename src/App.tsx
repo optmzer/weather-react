@@ -22,9 +22,11 @@ class App extends React.Component<any, any> {
         current_temp_kelvin: 0, // default from weather API in Kelvin
         current_time: Date.now(),
         farenheit: "",
+        five_day_forecast: [],
       };
 
       this.getCurrentWeather();
+      this.getFiveDayForecast();
   }
 
   // Get data from API
@@ -37,10 +39,30 @@ class App extends React.Component<any, any> {
       this.setState({
         current_temp_converted: this.tempKelvineToCelsius(res.main.temp),
         current_temp_kelvin: res.main.temp,
-        current_time: res.dt,
         latitude: res.coord.lat,
         longitude: res.coord.lon,
       });
+    })
+    .catch(
+      (err) => {
+        console.log(err);
+      },
+    );
+  }
+
+  public getFiveDayForecast = () => {
+    service.getFiveDayForecast(this.state.city_name)
+    .then(
+      (res) => {
+      // Put data into state log
+      if (res.list.length !== 0) {
+        this.setState({
+          current_temp_converted: this.tempKelvineToCelsius(res.list[0].main.temp),
+          current_temp_kelvin: res.list[0].main.temp,
+          latitude: res.city.coord.lat,
+          longitude: res.city.coord.lon,
+        });
+      }
     })
     .catch(
       (err) => {
@@ -83,31 +105,21 @@ class App extends React.Component<any, any> {
   }
 
   public render() {
-    // assemble options object for toLocaleTimeString() method
-    const options = {
-      // day: "numeric",
-      hour12: false,
-      // month: "short",
-      // weekday: "short",
-      // year: "numeric",
-    };
-
-    const timestamp = new Date(this.state.current_time).toLocaleTimeString("en-NZ", options);
 
     const data1 = {
-      date: this.state.current_time,
+      date: service.getTime24Hour(this.state.current_time),
       iconSrc: iconURL,
       temp: 45,
     };
 
     const data2 = {
-      date: this.state.current_time,
+      date: service.getTime24Hour(this.state.current_time),
       iconSrc: drizzleDay,
       temp: 28,
     };
 
     const data3 = {
-      date: this.state.current_time,
+      date: service.getTime24Hour(this.state.current_time),
       iconSrc: fewClouds,
       temp: 30,
     };
@@ -128,7 +140,7 @@ class App extends React.Component<any, any> {
           </p>
           <div className="current-time">
             <Ma.AccessTime className="current-time-icon"/>
-            <span>{timestamp}</span>
+            <span>{service.getFullDateTime(this.state.current_time)}</span>
           </div>
 
           <p>lat = {this.state.latitude}, lon = {this.state.longitude}</p>
