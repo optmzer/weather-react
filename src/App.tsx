@@ -8,7 +8,7 @@ import * as service from "./services/servicesAPI";
 import drizzleDay from "./img/weather-drizzle-day.png";
 import fewClouds from "./img/weather-few-clouds.png";
 import SearchBar from "./search/SearchBar";
-import SmallWeather from "./smallWeather/smallWeather";
+import SmallWeather from "./smallWeather/SmallWeather";
 
 // this is working too.
 const iconURL = "http://openweathermap.org/img/w/10d.png";

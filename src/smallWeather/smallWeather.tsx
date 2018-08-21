@@ -1,6 +1,6 @@
 import { ButtonBase, Grid, Paper, Typography } from "@material-ui/core";
 import * as React from "react";
-import "./smallWeather.css";
+import "./SmallWeather.css";
 
 /**
  * TODO: It should show temp, and small weather icon
