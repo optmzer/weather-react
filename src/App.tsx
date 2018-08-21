@@ -1,12 +1,13 @@
 // tslint:disable:no-console
-// React
+import "./App.css";
+
 import * as Ma from "@material-ui/icons";
 import * as React from "react";
-import "./App.css";
-// local
+import * as service from "./services/servicesAPI";
+
 import drizzleDay from "./img/weather-drizzle-day.png";
 import fewClouds from "./img/weather-few-clouds.png";
-import * as service from "./services/servicesAPI";
+import SearchBar from "./search/SearchBar";
 import SmallWeather from "./smallWeather/smallWeather";
 
 // this is working too.
@@ -54,15 +55,16 @@ class App extends React.Component<any, any> {
     service.getFiveDayForecast(this.state.city_name)
     .then(
       (res) => {
+        console.log(res);
       // Put data into state log
-      if (res.list.length !== 0) {
-        this.setState({
-          current_temp_converted: this.tempKelvineToCelsius(res.list[0].main.temp),
-          current_temp_kelvin: res.list[0].main.temp,
-          latitude: res.city.coord.lat,
-          longitude: res.city.coord.lon,
-        });
-      }
+        if (res.list.length !== 0) {
+          this.setState({
+            current_temp_converted: this.tempKelvineToCelsius(res.list[0].main.temp),
+            current_temp_kelvin: res.list[0].main.temp,
+            latitude: res.city.coord.lat,
+            longitude: res.city.coord.lon,
+          });
+        }
     })
     .catch(
       (err) => {
@@ -129,7 +131,8 @@ class App extends React.Component<any, any> {
         <header className="App-header">
           <h1 className="App-title">Welcome to Your Local Weather App</h1>
         </header>
-        <div className="mail-view">
+        <div className="main-view">
+          <SearchBar />
           <h3>{this.state.city_name}</h3>
           <p>{this.state.current_temp_converted}
             <span>
