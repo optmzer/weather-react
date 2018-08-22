@@ -39,8 +39,8 @@ export default class SmallWeather extends React.Component<any, any> {
             }
             return(
                 <div className="small-weather">
-                    <Paper className="weather-tile">
-                        <Grid container={true} spacing={16}>
+                    <Paper>
+                        <Grid container={true} spacing={16} className="weather-tile">
                             <Grid
                                 item={true}
                                 xs={5}
@@ -64,7 +64,12 @@ export default class SmallWeather extends React.Component<any, any> {
                                         <Button
                                             variant="text"
                                             color="default"
-                                            style={{background: "#ccccff", width: "80px"}}
+                                            style={{
+                                                background: "#ccccff",
+                                                minHeight: "20px",
+                                                padding: "0",
+                                                width: "80px",
+                                            }}
                                         >
                                             {tempMin}
                                         </Button>
@@ -73,7 +78,11 @@ export default class SmallWeather extends React.Component<any, any> {
                                         <Button
                                             variant="flat"
                                             color="default"
-                                            style={{background: "#dfbf9f", width: "80px"}}
+                                            style={{
+                                                background: "#dfbf9f",
+                                                minHeight: "20px",
+                                                padding: "0",
+                                                width: "80px"}}
                                         >
                                             {tempMax}
                                         </Button>

@@ -1,4 +1,4 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, GridList, GridListTile, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { AccessTime, AccountCircle } from "@material-ui/icons";
 import * as React from "react";
 import "./App.css";
@@ -86,7 +86,7 @@ class App extends React.Component<any, any> {
               color="inherit"
               aria-label="Menu"
             >
-              <AccountCircle />
+              <AccountCircle className="github"/>
             </IconButton>
             <Typography className="App-Title" variant="title" color="inherit" style={{flexGrow: 1}}>
               Local Weather App
@@ -120,9 +120,33 @@ class App extends React.Component<any, any> {
           <p>lat = {this.state.latitude}, lon = {this.state.longitude}</p>
         </div>
           <div className="grid-view">
-            <SmallWeather data={this.state.five_day_forecast[0]} celsius={this.state.celsius}/>
-            <SmallWeather data={this.state.five_day_forecast[8]} celsius={this.state.celsius}/>
-            <SmallWeather data={this.state.five_day_forecast[16]} celsius={this.state.celsius}/>
+            <GridList
+              className=""
+              cellHeight="auto"
+              spacing={4}
+              cols={4}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-around",
+                overflow: "hidden",
+              }}
+            >
+              {
+                this.state.five_day_forecast.map(
+                  (data: any, index: number) => {
+                    if (index % 8 === 0) {
+                      return (
+                        <GridListTile key={data.dt} cols={4}>
+                          <SmallWeather data={data} celsius={this.state.celsius} style={{backgroundColor: "#f5f5f5"}}/>
+                        </GridListTile>
+                      );
+                    }
+                    return null;
+                  },
+                )
+              }
+            </GridList>
           </div>
       </div>
     );
