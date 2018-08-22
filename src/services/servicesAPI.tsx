@@ -69,6 +69,22 @@ export function getDayMonthYearString(time: number): string {
   return new Date(time).toLocaleString("en-NZ", optionsDayMonthYear);
 }
 
+// ======
+
+// Kelvin to Farenhaite
+export function tempKelvineToFahrenheit(tempKelv: number): string {
+  const Farenheit = (9 / 5 * (tempKelv - 273)) + 32;
+  return Farenheit.toFixed(2);
+}
+
+// Kelvine to Celsius
+export function tempKelvineToCelsius(tempKelv: number): string {
+  const Celsius = tempKelv - 273;
+  return Celsius.toFixed(2);
+}
+
+// ======
+
 export function getCityId(cityName: string) {
   const uri = API_URL + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
   return uri;
