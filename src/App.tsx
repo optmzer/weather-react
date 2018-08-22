@@ -114,8 +114,8 @@ class App extends React.Component<any, any> {
         </div>
           <div className="grid-view">
             <SmallWeather data={this.state.five_day_forecast[0]} celsius={this.state.celsius}/>
-            <SmallWeather data={this.state.five_day_forecast[8]}/>
-            <SmallWeather data={this.state.five_day_forecast[16]}/>
+            <SmallWeather data={this.state.five_day_forecast[8]} celsius={this.state.celsius}/>
+            <SmallWeather data={this.state.five_day_forecast[16]} celsius={this.state.celsius}/>
           </div>
       </div>
     );

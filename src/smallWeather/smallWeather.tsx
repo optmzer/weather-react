@@ -21,10 +21,18 @@ export default class SmallWeather extends React.Component<any, any> {
     }
 
     public render() {
-        const { data } = this.props;
+        const { data, celsius } = this.props;
+        let tempMin;
+        let tempMax;
         if (data) {
             const iconSrc = service.ICON_URL + data.weather[0].icon + ".png";
-
+            if (celsius === "active") {
+                tempMin = "" + service.tempKelvineToCelsius(data.main.temp_min) + "°C";
+                tempMax = "" + service.tempKelvineToCelsius(data.main.temp_max) + "°C";
+            } else {
+                tempMin = "" + service.tempKelvineToFahrenheit(data.main.temp_min) + "°F";
+                tempMax = "" + service.tempKelvineToFahrenheit(data.main.temp_max) + "°F";
+            }
             return(
                 <div className="small-weather">
                     <Paper className="weather-tile">
@@ -50,16 +58,23 @@ export default class SmallWeather extends React.Component<any, any> {
                                 <Grid item={true} xs={true} container={true} direction="column" spacing={16}>
                                     <Grid item={true} xs={true} >
                                         <div className="elements-inline">
-                                            <Button variant="contained" color="default" >
-                                                {data.main.temp_min}
+                                            <Button variant="flat" color="default" style={{background: "#ccccff"}}>
+                                                {tempMin}
                                             </Button>
-                                            <Button variant="contained" color="default" >
-                                                {data.main.temp_max}
+                                            <Button variant="flat" color="default" style={{background: "#dfbf9f"}}>
+                                                {tempMax}
                                             </Button>
+                                            <Typography>
+                                                {data.weather[0].description}
+                                            </Typography>
                                         </div>
                                     </Grid>
                                     <Grid item={true}>
-                                        <Typography style={{ cursor: "pointer" }}>Remove</Typography>
+                                        <Typography
+                                         style={{ cursor: "pointer" }}
+                                        >
+                                            Add wind mph, fph/ Clouds %, Humidity
+                                        </Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid item={true}>
