@@ -1,17 +1,10 @@
 // tslint:disable:no-console
-import "./App.css";
-
 import * as Ma from "@material-ui/icons";
 import * as React from "react";
-import * as service from "./services/servicesAPI";
-
-import drizzleDay from "./img/weather-drizzle-day.png";
-import fewClouds from "./img/weather-few-clouds.png";
+import "./App.css";
 import SearchBar from "./search/SearchBar";
+import * as service from "./services/servicesAPI";
 import SmallWeather from "./smallWeather/SmallWeather";
-
-// this is working too.
-const iconURL = "http://openweathermap.org/img/w/10d.png";
 
 class App extends React.Component<any, any> {
   constructor(props: any) {
@@ -61,6 +54,7 @@ class App extends React.Component<any, any> {
           this.setState({
             current_temp_converted: this.tempKelvineToCelsius(res.list[0].main.temp),
             current_temp_kelvin: res.list[0].main.temp,
+            five_day_forecast: res.list,
             latitude: res.city.coord.lat,
             longitude: res.city.coord.lon,
           });
@@ -108,24 +102,6 @@ class App extends React.Component<any, any> {
 
   public render() {
 
-    const data1 = {
-      date: service.getTime24Hour(this.state.current_time),
-      iconSrc: iconURL,
-      temp: 45,
-    };
-
-    const data2 = {
-      date: service.getTime24Hour(this.state.current_time),
-      iconSrc: drizzleDay,
-      temp: 28,
-    };
-
-    const data3 = {
-      date: service.getTime24Hour(this.state.current_time),
-      iconSrc: fewClouds,
-      temp: 30,
-    };
-
     return (
       <div className="App">
         <header className="App-header">
@@ -148,11 +124,11 @@ class App extends React.Component<any, any> {
 
           <p>lat = {this.state.latitude}, lon = {this.state.longitude}</p>
         </div>
-        <div className="grid-view">
-          <SmallWeather data={data1}/>
-          <SmallWeather data={data2}/>
-          <SmallWeather data={data3}/>
-        </div>
+          <div className="grid-view">
+            <SmallWeather data={this.state.five_day_forecast[0]} celsius={this.state.celsius}/>
+            <SmallWeather data={this.state.five_day_forecast[8]}/>
+            <SmallWeather data={this.state.five_day_forecast[16]}/>
+          </div>
       </div>
     );
   }

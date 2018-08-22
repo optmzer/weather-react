@@ -3,7 +3,11 @@
     width: auto;
 }
 
-.small-weather-img{
+/* .small-weather-img{
     height: 20%;
     width: 20%;
+} */
+
+.active{
+    font-size: 1.5em;
 }

@@ -14,7 +14,7 @@ import APIKEY from "../secrets/client_secret.json";
  * }
  */
 
-// const urlSample = "api.openweathermap.org/data/2.5/weather?q=London";
+// const API_URLSample = "api.openweathermap.org/data/2.5/weather?q=London";
 /**
  * api.openweathermap.org/data/2.5/weather?q={city name}
  * api.openweathermap.org/data/2.5/weather?q={city name},{country code}
@@ -24,7 +24,13 @@ import APIKEY from "../secrets/client_secret.json";
  * api.openweathermap.org/data/2.5/weather?q=London,uk
  * http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
  */
-const url = "http://api.openweathermap.org/data/2.5/";
+const API_URL = "http://api.openweathermap.org/data/2.5/";
+
+/**
+ * Usage
+ * ICON_URL + 10d.png = "http://openweathermap.org/img/w/10d.png"
+ */
+export const ICON_URL = "http://openweathermap.org/img/w/";
 
 const headers: Headers = new Headers({
   "Content-Type": "text/plain",
@@ -44,23 +50,32 @@ const optionsFullDateTime = {
   year: "numeric",
 };
 
+const optionsDayMonthYear = {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+  year: "numeric",
+};
+
 export function getTime24Hour(time: number): string {
   return new Date(time).toLocaleTimeString("en-NZ", options24Hours);
-  // return new Date(time).toUTCString();
 }
 
 export function getFullDateTime(time: number): string {
   return new Date(time).toLocaleTimeString("en-NZ", optionsFullDateTime);
-  // return new Date(time).toUTCString();
+}
+
+export function getDayMonthYearString(time: number): string {
+  return new Date(time).toLocaleTimeString("en-NZ", optionsDayMonthYear);
 }
 
 export function getCityId(cityName: string) {
-  const uri = url + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
+  const uri = API_URL + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
   return uri;
 }
 
 export function getCurrentWeather(cityName: string): Promise<any> {
-  const uri = url + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
+  const uri = API_URL + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
   return fetch(uri, {
     headers,
     method: "POST",
@@ -71,7 +86,7 @@ export function getCurrentWeather(cityName: string): Promise<any> {
 }
 
 export function getFiveDayForecast(cityName: string): Promise<any> {
-  const uri = url + "forecast?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
+  const uri = API_URL + "forecast?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
   return fetch(uri, {
     headers,
     method: "POST",

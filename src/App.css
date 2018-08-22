@@ -1,9 +1,10 @@
 body {
-  width: 50%;
+  width: 70%;
 }
 
 .App {
   text-align: center;
+  margin: auto;
 }
 
 .current-time-icon{
