@@ -1,13 +1,4 @@
 .small-weather{
-    height: 20%;
+    height: 15%;
     width: auto;
-}
-
-/* .small-weather-img{
-    height: 20%;
-    width: 20%;
-} */
-
-.active{
-    font-size: 1.5em;
 }

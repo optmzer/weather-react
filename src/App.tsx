@@ -78,12 +78,17 @@ class App extends React.Component<any, any> {
 
     return (
       <div className="App">
-        <AppBar position="static" color="default">
+        <AppBar className="App-Bar" position="static" color="default">
           <Toolbar>
-            <IconButton color="inherit" aria-label="Menu" style={{flexGrow: 1}}>
+            <IconButton
+              href="https://github.com/optmzer"
+              target="_blank"
+              color="inherit"
+              aria-label="Menu"
+            >
               <AccountCircle />
             </IconButton>
-            <Typography variant="title" color="inherit" style={{flexGrow: 1}}>
+            <Typography className="App-Title" variant="title" color="inherit" style={{flexGrow: 1}}>
               Local Weather App
             </Typography>
             <div style={{flexGrow: 3, textAlign: "right"}}>

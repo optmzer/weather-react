@@ -48,7 +48,7 @@ export default class SmallWeather extends React.Component<any, any> {
                                 direction="row"
                                 alignItems="center"
                             >
-                                <Grid item={true} xs={5}>
+                                <Grid item={true} xs={5} style={{textAlign: "center"}}>
                                     <Typography>{service.getDayMonthYearString(data.dt * 1000)}</Typography>
                                 </Grid>
                                 <Grid item={true} xs={7}>
@@ -60,12 +60,20 @@ export default class SmallWeather extends React.Component<any, any> {
                             <Grid item={true} xs={7} container={true}>
                                 <Grid item={true} xs={true} container={true} direction="row" spacing={8}>
                                     <Grid item={true} xs={3}>
-                                        <Button variant="flat" color="default" style={{background: "#ccccff"}}>
+                                        <Button
+                                            variant="text"
+                                            color="default"
+                                            style={{background: "#ccccff", width: "80px"}}
+                                        >
                                             {tempMin}
                                         </Button>
                                     </Grid>
                                     <Grid item={true} xs={3}>
-                                        <Button variant="flat" color="default" style={{background: "#dfbf9f"}}>
+                                        <Button
+                                            variant="flat"
+                                            color="default"
+                                            style={{background: "#dfbf9f", width: "80px"}}
+                                        >
                                             {tempMax}
                                         </Button>
                                     </Grid>
