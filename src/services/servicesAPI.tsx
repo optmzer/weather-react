@@ -66,7 +66,7 @@ export function getFullDateTime(time: number): string {
 }
 
 export function getDayMonthYearString(time: number): string {
-  return new Date(time).toLocaleTimeString("en-NZ", optionsDayMonthYear);
+  return new Date(time).toLocaleString("en-NZ", optionsDayMonthYear);
 }
 
 export function getCityId(cityName: string) {

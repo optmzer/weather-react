@@ -5,8 +5,6 @@ import "./SmallWeather.css";
 
 /**
  * TODO: It should show temp, and small weather icon
- * possibly date like 23 Apr at the bottom from its props
- * from parent component.
  * Switch between C and F.
  */
 export interface ISmallWeatherProps {
