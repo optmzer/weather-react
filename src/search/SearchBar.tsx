@@ -1,4 +1,3 @@
-// tslint:disable:no-console jsx-no-multiline-js
 import { FormControl, IconButton, Input, InputAdornment, InputLabel } from "@material-ui/core";
 import { Cancel, Search } from "@material-ui/icons";
 import * as React from "react";
@@ -7,9 +6,9 @@ class SearchBar extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            city_name: "Auckland",
+            city_name: "",
         };
-        this.handleClickSearch();
+        this.props.getForecast("Auckland"); // Default value for now
     }
 
     public onTextChange = (event: any) => {
@@ -25,6 +24,10 @@ class SearchBar extends React.Component<any, any> {
 
     public handleClickSearch = () => {
         console.log("Send API request to Weather", this.state.city_name);
+        this.props.getForecast(this.state.city_name);
+        this.setState({
+            city_name: "",
+        });
     }
 
     public handleClickCancel = () => {
@@ -37,7 +40,7 @@ class SearchBar extends React.Component<any, any> {
         return(
             <div>
                 <FormControl className="search-bar">
-                    <InputLabel htmlFor="adornment-city-name">City Name</InputLabel>
+                    <InputLabel htmlFor="adornment-city-name">Search City Name</InputLabel>
                     <Input
                         id="adornment-search"
                         name="city_name"

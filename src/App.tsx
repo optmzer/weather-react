@@ -8,61 +8,47 @@ import SmallWeather from "./smallWeather/SmallWeather";
 
 class App extends React.Component<any, any> {
   constructor(props: any) {
-      super(props);
-      this.state = {
-        celsius: "active", // default in Celsius
-        city_name: "Auckland", // default Auckland
-        current_temp_converted: "",
-        current_temp_kelvin: 0, // default from weather API in Kelvin
-        current_time: Date.now(),
-        farenheit: "",
-        five_day_forecast: [],
-      };
-
-      this.getCurrentWeather();
-      this.getFiveDayForecast();
+    super(props);
+    this.state = {
+      celsius: "active", // default in Celsius
+      city_name: "Auckland", // default Auckland
+      country: "",
+      current_temp_converted: "",
+      current_temp_kelvin: 0, // default from weather API in Kelvin
+      current_time: Date.now(),
+      error_msg: "",
+      farenheit: "",
+      five_day_forecast: [],
+      visibility: false,
+    };
   }
 
-  // Get data from API
-  public getCurrentWeather = () => {
-    service.getCurrentWeather(this.state.city_name)
+  public getFiveDayForecast = (name: string) => {
+    service.getFiveDayForecast(name)
     .then(
       (res) => {
+        console.log("res = ", res);
       // Put data into state log
-      console.log("JSON.stringify(res) = ", JSON.stringify(res));
-      this.setState({
-        current_temp_converted: service.tempKelvineToCelsius(res.main.temp),
-        current_temp_kelvin: res.main.temp,
-        latitude: res.coord.lat,
-        longitude: res.coord.lon,
-      });
-    })
-    .catch(
-      (err) => {
-        console.log(err);
-      },
-    );
-  }
-
-  public getFiveDayForecast = () => {
-    service.getFiveDayForecast(this.state.city_name)
-    .then(
-      (res) => {
-        console.log(res);
-      // Put data into state log
-        if (res.list.length !== 0) {
+        if (res.cod === "200") {
           this.setState({
+            city_name: res.city.name,
+            country: res.city.country,
             current_temp_converted: service.tempKelvineToCelsius(res.list[0].main.temp),
             current_temp_kelvin: res.list[0].main.temp,
+            error_msg: "",
             five_day_forecast: res.list,
             latitude: res.city.coord.lat,
             longitude: res.city.coord.lon,
+          });
+        } else {
+          this.setState({
+            error_msg: res.message,
           });
         }
     })
     .catch(
       (err) => {
-        console.log(err);
+        console.log("error_msg = ", err);
       },
     );
   }
@@ -96,8 +82,15 @@ class App extends React.Component<any, any> {
           <h1 className="App-title">Welcome to Your Local Weather App</h1>
         </header>
         <div className="main-view">
-          <SearchBar />
-          <h3>{this.state.city_name}</h3>
+          <SearchBar getForecast={this.getFiveDayForecast}/>
+          {
+            this.state.error_msg === "" ?
+              <h3>
+                5 Day Forecast For {this.state.city_name}, {this.state.country}
+              </h3>
+            :
+              <h3 className="error" >{this.state.error_msg}</h3>
+          }
           <p>{this.state.current_temp_converted}
             <span>
               <a onClick={this.toggleTemp}>

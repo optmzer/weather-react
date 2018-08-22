@@ -83,6 +83,12 @@ export function tempKelvineToCelsius(tempKelv: number): string {
   return Celsius.toFixed(2);
 }
 
+// meters/sec to Miles/hour 1 mile = 1609.344 meters
+export function convertMetersToMilesHours(meters: number): string {
+  const mph = meters / 0.44704;
+  return mph.toFixed(2);
+}
+
 // ======
 
 export function getCityId(cityName: string) {

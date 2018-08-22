@@ -1,4 +1,5 @@
 import { Button, ButtonBase, CircularProgress, Grid, Paper, Typography } from "@material-ui/core";
+import { NearMe } from "@material-ui/icons";
 import * as React from "react";
 import * as service from "../services/servicesAPI";
 import "./SmallWeather.css";
@@ -24,14 +25,17 @@ export default class SmallWeather extends React.Component<any, any> {
         const { data, celsius } = this.props;
         let tempMin;
         let tempMax;
+        let windSpeed;
         if (data) {
             const iconSrc = service.ICON_URL + data.weather[0].icon + ".png";
             if (celsius === "active") {
                 tempMin = "" + service.tempKelvineToCelsius(data.main.temp_min) + "°C";
                 tempMax = "" + service.tempKelvineToCelsius(data.main.temp_max) + "°C";
+                windSpeed = "" + data.wind.speed + " m/s";
             } else {
                 tempMin = "" + service.tempKelvineToFahrenheit(data.main.temp_min) + "°F";
                 tempMax = "" + service.tempKelvineToFahrenheit(data.main.temp_max) + "°F";
+                windSpeed = "" + service.convertMetersToMilesHours(data.wind.speed) + " mph";
             }
             return(
                 <div className="small-weather">
@@ -42,7 +46,6 @@ export default class SmallWeather extends React.Component<any, any> {
                                 xs={5}
                                 container={true}
                                 direction="row"
-                                style={{background: "blue"}}
                                 alignItems="center"
                             >
                                 <Grid item={true} xs={5}>
@@ -55,30 +58,44 @@ export default class SmallWeather extends React.Component<any, any> {
                                 </Grid>
                             </Grid>
                             <Grid item={true} xs={7} container={true}>
-                                <Grid item={true} xs={true} container={true} direction="column" spacing={16}>
-                                    <Grid item={true} xs={true} >
-                                        <div className="elements-inline">
-                                            <Button variant="flat" color="default" style={{background: "#ccccff"}}>
-                                                {tempMin}
-                                            </Button>
-                                            <Button variant="flat" color="default" style={{background: "#dfbf9f"}}>
-                                                {tempMax}
-                                            </Button>
-                                            <Typography>
-                                                {data.weather[0].description}
-                                            </Typography>
-                                        </div>
+                                <Grid item={true} xs={true} container={true} direction="row" spacing={8}>
+                                    <Grid item={true} xs={3}>
+                                        <Button variant="flat" color="default" style={{background: "#ccccff"}}>
+                                            {tempMin}
+                                        </Button>
                                     </Grid>
-                                    <Grid item={true}>
-                                        <Typography
-                                         style={{ cursor: "pointer" }}
-                                        >
-                                            Add wind mph, fph/ Clouds %, Humidity
+                                    <Grid item={true} xs={3}>
+                                        <Button variant="flat" color="default" style={{background: "#dfbf9f"}}>
+                                            {tempMax}
+                                        </Button>
+                                    </Grid>
+                                    <Grid item={true} container={true} xs={6} alignItems="flex-start">
+                                        <Typography variant="caption">
+                                            {data.weather[0].description}
                                         </Typography>
                                     </Grid>
-                                </Grid>
-                                <Grid item={true}>
-                                    <Typography variant="subheading">$19.00</Typography>
+                                    <Grid
+                                        item={true}
+                                        container={true}
+                                        direction="row"
+                                        xs={12}
+                                        alignContent="space-around"
+                                    >
+                                        <Typography>
+                                            Wind: {windSpeed}, <NearMe/> {data.wind.deg}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid
+                                        item={true}
+                                        container={true}
+                                        direction="row"
+                                        xs={12}
+                                        alignContent="flex-start"
+                                    >
+                                        <Typography>
+                                            Humidity: {data.main.humidity}%, {data.main.pressure} hPa
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
