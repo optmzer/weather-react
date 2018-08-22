@@ -1,5 +1,5 @@
-// tslint:disable:no-console
-import * as Ma from "@material-ui/icons";
+import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
+import { AccessTime, AccountCircle } from "@material-ui/icons";
 import * as React from "react";
 import "./App.css";
 import SearchBar from "./search/SearchBar";
@@ -78,11 +78,20 @@ class App extends React.Component<any, any> {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to Your Local Weather App</h1>
-        </header>
+        <AppBar position="static" color="default">
+          <Toolbar>
+            <IconButton color="inherit" aria-label="Menu" style={{flexGrow: 1}}>
+              <AccountCircle />
+            </IconButton>
+            <Typography variant="title" color="inherit" style={{flexGrow: 1}}>
+              Local Weather App
+            </Typography>
+            <div style={{flexGrow: 3, textAlign: "right"}}>
+              <SearchBar getForecast={this.getFiveDayForecast}/>
+            </div>
+          </Toolbar>
+        </AppBar>
         <div className="main-view">
-          <SearchBar getForecast={this.getFiveDayForecast}/>
           {
             this.state.error_msg === "" ?
               <h3>
@@ -99,7 +108,7 @@ class App extends React.Component<any, any> {
             </span>
           </p>
           <div className="current-time">
-            <Ma.AccessTime className="current-time-icon"/>
+            <AccessTime className="current-time-icon"/>
             <span>{service.getFullDateTime(this.state.current_time)}</span>
           </div>
 

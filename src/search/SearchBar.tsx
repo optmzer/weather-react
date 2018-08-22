@@ -12,7 +12,6 @@ class SearchBar extends React.Component<any, any> {
     }
 
     public onTextChange = (event: any) => {
-        console.log("Event = ", event.target.value);
         this.setState({
             [event.target.name]: event.target.value,
         });
@@ -23,7 +22,6 @@ class SearchBar extends React.Component<any, any> {
     }
 
     public handleClickSearch = () => {
-        console.log("Send API request to Weather", this.state.city_name);
         this.props.getForecast(this.state.city_name);
         this.setState({
             city_name: "",
