@@ -46,7 +46,8 @@ export default class SmallWeather extends React.Component<any, any> {
                                 xs={5}
                                 container={true}
                                 direction="row"
-                                alignItems="center"
+                                alignItems="baseline"
+                                style={{paddingBottom: "0.4em"}}
                             >
                                 <Grid item={true} xs={5} style={{textAlign: "center"}}>
                                     <Typography>{service.getDayMonthYearString(data.dt * 1000)}</Typography>
