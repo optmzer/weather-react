@@ -118,15 +118,17 @@ class App extends React.Component<any, any> {
                 <Typography variant="headline">{this.state.error_msg}</Typography>
             }
             <Typography
+              className="tempToggle"
               variant="subheading"
               style={{
                 fontSize: "1.5rem",
                 paddingBottom: "0.2em",
                 paddingTop: "0.2em",
               }}
+              onClick={this.toggleTemp}
             > {this.state.current_temp_converted}
-              <span className="tempToggle">
-                <a onClick={this.toggleTemp}>
+              <span>
+                <a>
                   <span className={this.state.celsius}> °C</span> | <span className={this.state.farenheit}>°F</span>
                 </a>
               </span>
