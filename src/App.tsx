@@ -1,5 +1,5 @@
-import { AppBar, GridList, GridListTile, IconButton, Toolbar, Typography } from "@material-ui/core";
-import { AccessTime, AccountCircle } from "@material-ui/icons";
+import { AppBar, Card, CardContent, GridList, GridListTile, IconButton, Toolbar, Typography } from "@material-ui/core";
+import { AccountCircle } from "@material-ui/icons";
 import * as React from "react";
 import "./App.css";
 import SearchBar from "./search/SearchBar";
@@ -96,58 +96,85 @@ class App extends React.Component<any, any> {
             </div>
           </Toolbar>
         </AppBar>
-        <div className="main-view">
-          {
-            this.state.error_msg === "" ?
-              <h3>
-                5 Day Forecast For {this.state.city_name}, {this.state.country}
-              </h3>
-            :
-              <h3 className="error" >{this.state.error_msg}</h3>
-          }
-          <p>{this.state.current_temp_converted}
-            <span>
-              <a onClick={this.toggleTemp}>
-                <span className={this.state.celsius}> °C</span> | <span className={this.state.farenheit}>°F</span>
-              </a>
-            </span>
-          </p>
-          <div className="current-time">
-            <AccessTime className="current-time-icon"/>
-            <span>{service.getFullDateTime(this.state.current_time)}</span>
-          </div>
-
-          <p>lat = {this.state.latitude}, lon = {this.state.longitude}</p>
-        </div>
-          <div className="grid-view">
-            <GridList
-              className=""
-              cellHeight="auto"
-              spacing={4}
-              cols={4}
+        <Card
+          className="mainViewCard"
+          style={{
+            backgroundImage: "url(\"https://images.pexels.com/photos/1340156/pexels-photo-1340156.jpeg\")",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "auto 100%",
+            textAlign: "right",
+          }}
+        >
+          <CardContent className="">
+            {
+              this.state.error_msg === "" ?
+                <div>
+                  <Typography variant="headline">5 Day Forecast For</Typography>
+                  <Typography variant="headline">
+                    {this.state.city_name}, {this.state.country}
+                  </Typography>
+                </div>
+              :
+                <Typography variant="headline">{this.state.error_msg}</Typography>
+            }
+            <Typography
+              variant="subheading"
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-around",
-                overflow: "hidden",
+                fontSize: "1.5rem",
+                paddingBottom: "0.2em",
+                paddingTop: "0.2em",
               }}
-            >
-              {
-                this.state.five_day_forecast.map(
-                  (data: any, index: number) => {
-                    if (index % 8 === 0) {
-                      return (
-                        <GridListTile key={data.dt} cols={4}>
-                          <SmallWeather data={data} celsius={this.state.celsius} style={{backgroundColor: "#f5f5f5"}}/>
-                        </GridListTile>
-                      );
-                    }
-                    return null;
-                  },
-                )
-              }
-            </GridList>
-          </div>
+            > {this.state.current_temp_converted}
+              <span className="tempToggle">
+                <a onClick={this.toggleTemp}>
+                  <span className={this.state.celsius}> °C</span> | <span className={this.state.farenheit}>°F</span>
+                </a>
+              </span>
+            </Typography>
+            <div className="current-time">
+              <Typography
+                variant="body2"
+                style={{
+                  fontSize: "1.5rem",
+                }}
+              >
+                {service.getFullDateTime(this.state.current_time)}
+              </Typography>
+            </div>
+            <Typography variant="subheading" color="textSecondary">
+              lat = {this.state.latitude}, lon = {this.state.longitude}
+            </Typography>
+          </CardContent>
+        </Card>
+        <div className="grid-view">
+          <GridList
+            className=""
+            cellHeight="auto"
+            spacing={4}
+            cols={4}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+              overflow: "hidden",
+            }}
+          >
+            {
+              this.state.five_day_forecast.map(
+                (data: any, index: number) => {
+                  if (index % 8 === 0) {
+                    return (
+                      <GridListTile key={data.dt} cols={4}>
+                        <SmallWeather data={data} celsius={this.state.celsius} style={{backgroundColor: "#f5f5f5"}}/>
+                      </GridListTile>
+                    );
+                  }
+                  return null;
+                },
+              )
+            }
+          </GridList>
+        </div>
       </div>
     );
   }
