@@ -1,18 +1,4 @@
-// tslint:disable:no-console
 import APIKEY from "../secrets/client_secret.json";
-
-/**
- * list of cities JSON sample.
- * {
- *   "id": 519188,
- *   "name": "Novinki",
- *   "country": "RU",
- *   "coord": {
- *     "lon": 37.666668,
- *     "lat": 55.683334
- *   }
- * }
- */
 
 // const API_URLSample = "api.openweathermap.org/data/2.5/weather?q=London";
 /**
@@ -91,11 +77,6 @@ export function convertMetersToMilesHours(meters: number): string {
 
 // ======
 
-export function getCityId(cityName: string) {
-  const uri = API_URL + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
-  return uri;
-}
-
 export function getCurrentWeather(cityName: string): Promise<any> {
   const uri = API_URL + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
   return fetch(uri, {
@@ -115,5 +96,60 @@ export function getFiveDayForecast(cityName: string): Promise<any> {
   })
   .then(
     (res) => res.json(), // Have to have this in order to get to the body.
+  );
+}
+
+/**
+ * Fetches a picture from Pexel.com by description
+ * of weather condition
+ * Always credit our photographers when possible (e.g.
+ * "Photo by John Doe on Pexels" with a link to the photo page on Pexels).
+ *
+ * req -
+ * add a HTTP Authorization header to each of your requests
+ * Authorization: YOUR_API_KEY
+ *
+ * https://api.pexels.com/v1/search?query=example+query&per_page=15&page=1
+ * query -	Get photos related to this query. (required)
+ * per_page - Defines the number of results per page. (optional, default: 15, max: 40)
+ * page -	Defines the number of the page. (optional, default: 1)
+ *
+ * res -
+ * use medium or large
+ * {
+ * page: 1,
+ * per_page: 15,
+ * total_results: 236,
+ * url: "https://www.pexels.com/search/example%20query/",
+ * next_page: "https://api.pexels.com/v1/search/?page=2&per_page=15&query=example+query"
+ * photos: [{
+ * width: 1000,
+ * height: 1000,
+ * url: "https://www.pexels.com/photo/12345",
+ * photographer: "Name",
+ * src: {
+ *   original: "https://*.jpg",
+ *   large: "https://*.jpg",
+ *   large2x: "https://*.jpg",
+ *   medium: "https://*.jpg",
+ *   small: "https://*.jpg",
+ *   portrait: "https://*.jpg",
+ *   landscape: "https://*.jpg",
+ *   tiny: "https://*.jpg"
+ *   }, (NEXT PHOTOS)]
+ *  }
+ * }
+ */
+export function getBackgroundPic(description: string): Promise<any> {
+  const PEXELS_URI = "https://api.pexels.com/v1/search?query=";
+  const queryURI = PEXELS_URI + description + "&per_page=15&page=1";
+  return fetch(queryURI, {
+    headers: new Headers({
+      "Authorization": APIKEY.pexels.API_KEY,
+      "Content-Type": "text/plain",
+    }),
+    method: "GET",
+  } ).then(
+    (res) => res.json(),
   );
 }

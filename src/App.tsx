@@ -1,7 +1,11 @@
-import { AppBar, Card, CardContent, GridList, GridListTile, IconButton, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar, Card, CardContent, CardMedia,
+  GridList, GridListTile, IconButton, Toolbar,
+  Typography } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import * as React from "react";
 import "./App.css";
+import PEXELS_LOGO_WHITE from "./img/pexels-logo-white.png";
 import SearchBar from "./search/SearchBar";
 import * as service from "./services/servicesAPI";
 import SmallWeather from "./smallWeather/SmallWeather";
@@ -99,13 +103,39 @@ class App extends React.Component<any, any> {
         <Card
           className="mainViewCard"
           style={{
-            backgroundImage: "url(\"https://images.pexels.com/photos/1340156/pexels-photo-1340156.jpeg\")",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "auto 100%",
+            display: "flex",
             textAlign: "right",
           }}
         >
-          <CardContent className="">
+          <CardMedia
+            style={{
+              flex: "1 1 10%",
+              textAlign: "left",
+            }}
+            image="https://images.pexels.com/photos/1340156/pexels-photo-1340156.jpeg"
+            title="Weather picture from Pexels.org"
+          >
+            <a
+              href="https://images.pexels.com/"
+              target="_blank"
+            >
+              <img
+                src={PEXELS_LOGO_WHITE}
+                style={{
+                  width: "15%",
+                }}
+                title="pexels logo white"
+              />
+              <Typography variant="subheading" color="textSecondary">by: A Photograf </Typography>
+            </a>
+          </CardMedia>
+          <CardContent
+            className=""
+            style={{
+              flex: "1",
+              flexDirection: "column",
+            }}
+          >
             {
               this.state.error_msg === "" ?
                 <div>
