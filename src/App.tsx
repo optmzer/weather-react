@@ -1,8 +1,7 @@
 import {
-  AppBar, Card, CardContent, CardMedia,
+  AppBar, Avatar,  Card, CardContent, CardMedia,
   GridList, GridListTile, IconButton, Toolbar,
   Typography } from "@material-ui/core";
-import { AccountCircle } from "@material-ui/icons";
 import * as React from "react";
 import "./App.css";
 import PEXELS_LOGO_WHITE from "./img/pexels-logo-white.png";
@@ -90,7 +89,11 @@ class App extends React.Component<any, any> {
               color="inherit"
               aria-label="Menu"
             >
-              <AccountCircle className="github"/>
+              <Avatar
+                className="github"
+                alt="Alexander Frolov"
+                src="https://avatars3.githubusercontent.com/u/22677018?s=40&v=4"
+              />
             </IconButton>
             <Typography className="App-Title" variant="title" color="inherit" style={{flexGrow: 1}}>
               Local Weather App
@@ -110,14 +113,20 @@ class App extends React.Component<any, any> {
           <CardMedia
             style={{
               flex: "1 1 10%",
+              paddingLeft: "0.5rem",
               textAlign: "left",
             }}
             image="https://images.pexels.com/photos/1340156/pexels-photo-1340156.jpeg"
             title="Weather picture from Pexels.org"
           >
             <a
-              href="https://images.pexels.com/"
+              href="https://pexels.com/"
               target="_blank"
+              style={{
+                bottom: "-13.7rem",
+                position: "relative",
+                textDecoration: "none",
+              }}
             >
               <img
                 src={PEXELS_LOGO_WHITE}
@@ -126,7 +135,14 @@ class App extends React.Component<any, any> {
                 }}
                 title="pexels logo white"
               />
-              <Typography variant="subheading" color="textSecondary">by: A Photograf </Typography>
+              <Typography
+                variant="caption"
+                style={{
+                  color: "#aba5a5",
+                }}
+              >
+                by: A Photograf D La'Maurinio
+              </Typography>
             </a>
           </CardMedia>
           <CardContent
