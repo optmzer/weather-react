@@ -123,7 +123,7 @@ class App extends React.Component<any, any> {
               href="https://pexels.com/"
               target="_blank"
               style={{
-                bottom: "-13.7rem",
+                bottom: "-11.4rem",
                 position: "relative",
                 textDecoration: "none",
               }}
@@ -138,7 +138,7 @@ class App extends React.Component<any, any> {
               <Typography
                 variant="caption"
                 style={{
-                  color: "#aba5a5",
+                  color: "#535050",
                 }}
               >
                 by: A Photograf D La'Maurinio
