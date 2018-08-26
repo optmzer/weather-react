@@ -8,13 +8,13 @@
  * api.openweathermap.org/data/2.5/weather?q=London,uk
  * http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
  */
-const API_URL = "http://api.openweathermap.org/data/2.5/";
+const API_URL = "https://api.openweathermap.org/data/2.5/";
 
 /**
  * Usage
  * ICON_URL + 10d.png = "http://openweathermap.org/img/w/10d.png"
  */
-export const ICON_URL = "http://openweathermap.org/img/w/";
+export const ICON_URL = "https://openweathermap.org/img/w/";
 
 const headers: Headers = new Headers({
   "Content-Type": "text/plain",
