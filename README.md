@@ -16,29 +16,13 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
   - [npm run eject](#npm-run-eject)
-- [Supported Browsers](#supported-browsers)
-- [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
-- [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
-- [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
-- [Debugging in the Editor](#debugging-in-the-editor)
-- [Formatting Code Automatically](#formatting-code-automatically)
-- [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
-- [Importing a Component](#importing-a-component)
-- [Code Splitting](#code-splitting)
-- [Adding a Stylesheet](#adding-a-stylesheet)
-- [Post-Processing CSS](#post-processing-css)
-- [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
 - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
 - [Using the `public` Folder](#using-the-public-folder)
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
   - [When to Use the `public` Folder](#when-to-use-the-public-folder)
 - [Using Global Variables](#using-global-variables)
-- [Adding Bootstrap](#adding-bootstrap)
-  - [Using a Custom Theme](#using-a-custom-theme)
-- [Adding Flow](#adding-flow)
-- [Adding a Router](#adding-a-router)
 - [Adding Custom Environment Variables](#adding-custom-environment-variables)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
@@ -91,45 +75,10 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Firebase](#firebase)
   - [GitHub Pages](#github-pages)
   - [Heroku](#heroku)
-  - [Netlify](#netlify)
-  - [Now](#now)
-  - [S3 and CloudFront](#s3-and-cloudfront)
-  - [Surge](#surge)
-- [Advanced Configuration](#advanced-configuration)
-- [Troubleshooting](#troubleshooting)
-  - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
-  - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
-  - [`npm run build` exits too early](#npm-run-build-exits-too-early)
-  - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku)
-  - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
-  - [Moment.js locales are missing](#momentjs-locales-are-missing)
-- [Alternatives to Ejecting](#alternatives-to-ejecting)
-- [Something Missing?](#something-missing)
-
-## Updating to New Releases
-
-Create React App is divided into two packages:
-
-* `create-react-app` is a global command-line utility that you use to create new projects.
-* `react-scripts` is a development dependency in the generated projects (including this one).
-
-You almost never need to update `create-react-app` itself: it delegates all the setup to `react-scripts`.
-
-When you run `create-react-app`, it always creates the project with the latest version of `react-scripts` so you’ll get all the new features and improvements in newly created apps automatically.
-
-To update an existing project to a new version of `react-scripts`, [open the changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md), find the version you’re currently on (check `package.json` in this folder if you’re not sure), and apply the migration instructions for the newer versions.
-
-In most cases bumping the `react-scripts` version in `package.json` and running `npm install` in this folder should be enough, but it’s good to consult the [changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md) for potential breaking changes.
-
-We commit to keeping the breaking changes minimal so you can upgrade `react-scripts` painlessly.
-
-## Sending Feedback
-
-We are always open to [your feedback](https://github.com/facebookincubator/create-react-app/issues).
+ 
 
 ## Folder Structure
 
-After creation, your project should look like this:
 
 ```
 my-app/
@@ -140,12 +89,22 @@ my-app/
     index.html
     favicon.ico
   src/
+    img/
+      pexel-logo-black.png
+      pexel-logo-white.png
+    search/
+      SearchBar.tsx
+    services/
+      servicesAPI.tsx
+    smallWeather/
+      SmallWeather.tsx
+      SmallWeather.css
     App.css
-    App.js
-    App.test.js
+    App.tsx
+    App.test.tsx
     index.css
-    index.js
-    logo.svg
+    index.tsx
+    registerServiceWorker.ts
 ```
 
 For the project to build, **these files must exist with exact filenames**:
@@ -1981,156 +1940,10 @@ The `build` folder with static assets is the only output produced by Create Reac
 
 However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
 
-### Serving Apps with Client-Side Routing
-
-If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
-
-This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
-
-```diff
- app.use(express.static(path.join(__dirname, 'build')));
-
--app.get('/', function (req, res) {
-+app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, 'build', 'index.html'));
- });
-```
-
-If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
-
-```
-    Options -MultiViews
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.html [QSA,L]
-```
-
-It will get copied to the `build` folder when you run `npm run build`. 
-
-If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
-
-Now requests to `/todos/42` will be handled correctly both in development and in production.
-
-On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
-the service worker will automatically handle all navigation requests, like for
-`/todos/42`, by serving the cached copy of your `index.html`. This
-service worker navigation routing can be configured or disabled by
-[`eject`ing](#npm-run-eject) and then modifying the
-[`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
-and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
-options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
-
-### Building for Relative Paths
-
-By default, Create React App produces a build assuming your app is hosted at the server root.<br>
-To override this, specify the `homepage` in your `package.json`, for example:
-
-```js
-  "homepage": "http://mywebsite.com/relativepath",
-```
-
-This will let Create React App correctly infer the root path to use in the generated HTML file.
-
-**Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
-More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
-<br>
-For example:
-```js
-<BrowserRouter basename="/calendar"/>
-<Link to="/today"/> // renders <a href="/calendar/today">
-```
-
-#### Serving the Same Build from Different Paths
-
->Note: this feature is available with `react-scripts@0.9.0` and higher.
-
-If you are not using the HTML5 `pushState` history API or not using client-side routing at all, it is unnecessary to specify the URL from which your app will be served. Instead, you can put this in your `package.json`:
-
-```js
-  "homepage": ".",
-```
-
-This will make sure that all the asset paths are relative to `index.html`. You will then be able to move your app from `http://mywebsite.com` to `http://mywebsite.com/relativepath` or even `http://mywebsite.com/relative/path` without having to rebuild it.
-
 ### Azure
 
 See [this](https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321) blog post on how to deploy your React app to [Microsoft Azure](https://azure.microsoft.com/).
 
-### Firebase
-
-See [this](https://medium.com/@strid/host-create-react-app-on-azure-986bc40d5bf2#.pycfnafbg) blog post or [this](https://github.com/ulrikaugustsson/azure-appservice-static) repo for a way to use automatic deployment to Azure App Service.
-
-
-Install the Firebase CLI if you haven’t already by running `npm install -g firebase-tools`. Sign up for a [Firebase account](https://console.firebase.google.com/) and create a new project. Run `firebase login` and login with your previous created Firebase account.
-
-Then run the `firebase init` command from your project’s root. You need to choose the **Hosting: Configure and deploy Firebase Hosting sites** and choose the Firebase project you created in the previous step. You will need to agree with `database.rules.json` being created, choose `build` as the public directory, and also agree to **Configure as a single-page app** by replying with `y`.
-
-```sh
-    === Project Setup
-
-    First, let's associate this project directory with a Firebase project.
-    You can create multiple project aliases by running firebase use --add,
-    but for now we'll just set up a default project.
-
-    ? What Firebase project do you want to associate as default? Example app (example-app-fd690)
-
-    === Database Setup
-
-    Firebase Realtime Database Rules allow you to define how your data should be
-    structured and when your data can be read from and written to.
-
-    ? What file should be used for Database Rules? database.rules.json
-    ✔  Database Rules for example-app-fd690 have been downloaded to database.rules.json.
-    Future modifications to database.rules.json will update Database Rules when you run
-    firebase deploy.
-
-    === Hosting Setup
-
-    Your public directory is the folder (relative to your project directory) that
-    will contain Hosting assets to uploaded with firebase deploy. If you
-    have a build process for your assets, use your build's output directory.
-
-    ? What do you want to use as your public directory? build
-    ? Configure as a single-page app (rewrite all urls to /index.html)? Yes
-    ✔  Wrote build/index.html
-
-    i  Writing configuration info to firebase.json...
-    i  Writing project information to .firebaserc...
-
-    ✔  Firebase initialization complete!
-```
-
-IMPORTANT: you need to set proper HTTP caching headers for `service-worker.js` file in `firebase.json` file or you will not be able to see changes after first deployment ([issue #2440](https://github.com/facebookincubator/create-react-app/issues/2440)). It should be added inside `"hosting"` key like next:
-
-```
-{
-  "hosting": {
-    ...
-    "headers": [
-      {"source": "/service-worker.js", "headers": [{"key": "Cache-Control", "value": "no-cache"}]}
-    ]
-    ...
-```
-
-Now, after you create a production build with `npm run build`, you can deploy it by running `firebase deploy`.
-
-```sh
-    === Deploying to 'example-app-fd690'...
-
-    i  deploying database, hosting
-    ✔  database: rules ready to deploy.
-    i  hosting: preparing build directory for upload...
-    Uploading: [==============================          ] 75%✔  hosting: build folder uploaded successfully
-    ✔  hosting: 8 files uploaded successfully
-    i  starting release process (may take several minutes)...
-
-    ✔  Deploy complete!
-
-    Project Console: https://console.firebase.google.com/project/example-app-fd690/overview
-    Hosting URL: https://example-app-fd690.firebaseapp.com
-```
-
-For more information see [Add Firebase to your JavaScript Project](https://firebase.google.com/docs/web/setup).
 
 ### GitHub Pages
 
