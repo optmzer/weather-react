@@ -1,7 +1,9 @@
 import {
-  AppBar, Avatar,  Card, CardContent, CardMedia,
-  GridList, GridListTile, IconButton, Toolbar,
-  Typography } from "@material-ui/core";
+  AppBar, Avatar, Card, CardContent,
+   CardMedia, GridList, GridListTile,
+    IconButton, Toolbar, Typography,
+  } from "@material-ui/core";
+import dotenv from "dotenv";
 import * as React from "react";
 import "./App.css";
 import PEXELS_LOGO_WHITE from "./img/pexels-logo-white.png";
@@ -24,6 +26,7 @@ class App extends React.Component<any, any> {
       five_day_forecast: [],
       visibility: false,
     };
+    dotenv.config();
   }
 
   public getFiveDayForecast = (name: string) => {

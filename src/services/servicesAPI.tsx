@@ -1,5 +1,3 @@
-import APIKEY from "../secrets/client_secret.json";
-
 // const API_URLSample = "api.openweathermap.org/data/2.5/weather?q=London";
 /**
  * api.openweathermap.org/data/2.5/weather?q={city name}
@@ -78,7 +76,7 @@ export function convertMetersToMilesHours(meters: number): string {
 // ======
 
 export function getCurrentWeather(cityName: string): Promise<any> {
-  const uri = API_URL + "weather?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
+  const uri = API_URL + "weather?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
   return fetch(uri, {
     headers,
     method: "POST",
@@ -89,7 +87,8 @@ export function getCurrentWeather(cityName: string): Promise<any> {
 }
 
 export function getFiveDayForecast(cityName: string): Promise<any> {
-  const uri = API_URL + "forecast?q=" + cityName + "&APPID=" + APIKEY.web.APPID;
+  const uri = API_URL + "forecast?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
+  console.log("serviceAPI.getFiveDayForecast = ", uri);
   return fetch(uri, {
     headers,
     method: "POST",
@@ -143,9 +142,10 @@ export function getFiveDayForecast(cityName: string): Promise<any> {
 export function getBackgroundPic(description: string): Promise<any> {
   const PEXELS_URI = "https://api.pexels.com/v1/search?query=";
   const queryURI = PEXELS_URI + description + "&per_page=15&page=1";
+  const APIKEY: string = process.env.REACT_APP_PEXEL_API_KEY as string;
   return fetch(queryURI, {
     headers: new Headers({
-      "Authorization": APIKEY.pexels.API_KEY,
+      "Authorization": APIKEY,
       "Content-Type": "text/plain",
     }),
     method: "GET",

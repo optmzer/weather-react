@@ -11,6 +11,9 @@
 
 # misc
 .DS_Store
+
+# Do not commit ENV variable to public repo!!!
+.env
 .env.local
 .env.development.local
 .env.test.local

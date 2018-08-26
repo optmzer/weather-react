@@ -12,6 +12,11 @@ declare module "*.json" {
 declare module "react-autosuggest";
 
 /**
+ * Import env variables from .env file.
+ */
+declare module 'dotenv';
+
+/**
  * City data object from city.list.json that
  * contains list of all the cities openweather.org collects data for.
  */
