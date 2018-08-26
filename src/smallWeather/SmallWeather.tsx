@@ -4,17 +4,6 @@ import * as React from "react";
 import * as service from "../services/servicesAPI";
 import "./SmallWeather.css";
 
-/**
- * TODO: It should show temp, and small weather icon
- * Switch between C and F.
- */
-export interface ISmallWeatherProps {
-    iconSrc: string;
-    temp: number;
-    date: number;
-}
-
-// "HelloProps" describes the shape of props.
 // State is never set so we use the "{}" type.
 class SmallWeather extends React.Component<any, any> {
     constructor(props: any) {
