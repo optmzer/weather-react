@@ -16,7 +16,7 @@ export interface ISmallWeatherProps {
 
 // "HelloProps" describes the shape of props.
 // State is never set so we use the "{}" type.
-export default class SmallWeather extends React.Component<any, any> {
+class SmallWeather extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
     }
@@ -129,3 +129,5 @@ export default class SmallWeather extends React.Component<any, any> {
         }
     }// render()
 }// class
+
+export default SmallWeather;

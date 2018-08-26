@@ -26,6 +26,7 @@ class App extends React.Component<any, any> {
       five_day_forecast: [],
       visibility: false,
     };
+    // Config ENV variables at start up
     dotenv.config();
   }
 
