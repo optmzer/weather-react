@@ -1,4 +1,3 @@
-// const API_URLSample = "api.openweathermap.org/data/2.5/weather?q=London";
 /**
  * api.openweathermap.org/data/2.5/weather?q={city name}
  * api.openweathermap.org/data/2.5/weather?q={city name},{country code}
