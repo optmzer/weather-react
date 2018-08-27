@@ -87,7 +87,6 @@ export function getCurrentWeather(cityName: string): Promise<any> {
 
 export function getFiveDayForecast(cityName: string): Promise<any> {
   const uri = API_URL + "forecast?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
-  console.log("serviceAPI.getFiveDayForecast = ", uri);
   return fetch(uri, {
     headers,
     method: "POST",

@@ -34,7 +34,6 @@ class App extends React.Component<any, any> {
     service.getFiveDayForecast(name)
     .then(
       (res) => {
-        console.log("res = ", res);
       // Put data into state log
         if (res.cod === "200") {
           this.setState({
@@ -55,7 +54,9 @@ class App extends React.Component<any, any> {
     })
     .catch(
       (err) => {
-        console.log("error_msg = ", err);
+        this.setState({
+          error_msg: err.message,
+        });
       },
     );
   }
