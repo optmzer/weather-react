@@ -9,6 +9,5 @@
   },
   "rules": {
     "jsx-no-multiline-js": false,
-    "no-console": false
   }
 }
