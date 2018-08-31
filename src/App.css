@@ -25,8 +25,3 @@
   color: #202020;
   text-shadow: 1px 1px #c1c1c1;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}

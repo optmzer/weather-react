@@ -17,16 +17,11 @@ declare module "react-autosuggest";
 declare module 'dotenv';
 
 /**
- * City data object from city.list.json that
- * contains list of all the cities openweather.org collects data for.
+ * Contains data of image search result from Pexel
  */
-interface ICityData {
-    id: number;
-    name: string;
-    country: string;
-    coord: {
-      lon: number;
-      lat: number;
-    }
+interface IPexelImg {
+  photographer: string,
+  src: string,
+  url: string,
   }
   

@@ -1,8 +1,5 @@
-import {
-  AppBar, Avatar, Card, CardContent,
-   CardMedia, GridList, GridListTile,
-    IconButton, Toolbar, Typography,
-  } from "@material-ui/core";
+import { AppBar, Avatar, Card, CardContent, CardMedia, CircularProgress } from "@material-ui/core";
+import { GridList, GridListTile, IconButton, Toolbar, Typography } from "@material-ui/core";
 import dotenv from "dotenv";
 import * as React from "react";
 import "./App.css";
@@ -15,6 +12,10 @@ class App extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      bg_err: "",
+      bg_href: "",
+      bg_photographer: "",
+      bg_src: "",
       celsius: "active", // default in Celsius
       city_name: "Auckland", // default Auckland
       country: "",
@@ -46,6 +47,7 @@ class App extends React.Component<any, any> {
             latitude: res.city.coord.lat,
             longitude: res.city.coord.lon,
           });
+          this.getBackgroundPic(res.list[0].weather[0].description);
         } else {
           this.setState({
             error_msg: res.message,
@@ -59,6 +61,31 @@ class App extends React.Component<any, any> {
         });
       },
     );
+  }
+
+  public getBackgroundPic(weatherCondition: string) {
+    service.getBackgroundPic(weatherCondition)
+      .then((res) => {
+        // Put data into state log
+        if (res.photos.length !== 0) {
+          const randPicIndex = service.getRandomInt(res.photos.length);
+          this.setState({
+            bg_err: "",
+            bg_href: res.photos[randPicIndex].url,
+            bg_photographer: res.photos[randPicIndex].photographer,
+            bg_src: res.photos[randPicIndex].src.medium,
+          });
+        } else {
+          this.setState({
+            bg_err: res.message,
+          });
+        }
+      })
+      .catch((err) => {
+        this.setState({
+          bg_err: err.message,
+        });
+      });
   }
 
   // Toggles temp between C and F.
@@ -115,41 +142,46 @@ class App extends React.Component<any, any> {
             textAlign: "right",
           }}
         >
-          <CardMedia
-            style={{
-              flex: "1 1 10%",
-              paddingLeft: "0.5rem",
-              textAlign: "left",
-            }}
-            image="https://images.pexels.com/photos/1340156/pexels-photo-1340156.jpeg"
-            title="Weather picture from Pexels.org"
-          >
-            <a
-              href="https://pexels.com/"
-              target="_blank"
+          { this.state.bg_src === ""
+           ?
+            <CircularProgress style={{alignSelf: "center", marginLeft: "10em"}} thickness={2} />
+           :
+            <CardMedia
               style={{
-                bottom: "-11.4rem",
-                position: "relative",
-                textDecoration: "none",
+                flex: "1 1 10%",
+                paddingLeft: "0.5rem",
+                textAlign: "left",
               }}
+              image={this.state.bg_src}
+              title="Weather picture from Pexels.org"
             >
-              <img
-                src={PEXELS_LOGO_WHITE}
+              <a
+                href={this.state.bg_href}
+                target="_blank"
                 style={{
-                  width: "15%",
-                }}
-                title="pexels logo white"
-              />
-              <Typography
-                variant="caption"
-                style={{
-                  color: "#535050",
+                  bottom: "-11.4rem",
+                  position: "relative",
+                  textDecoration: "none",
                 }}
               >
-                by: A Photograf D La'Maurinio
-              </Typography>
-            </a>
-          </CardMedia>
+                <img
+                  src={PEXELS_LOGO_WHITE}
+                  style={{
+                    width: "15%",
+                  }}
+                  title="pexels logo white"
+                />
+                <Typography
+                  variant="caption"
+                  style={{
+                    color: "#535050",
+                  }}
+                >
+                  by: {this.state.bg_photographer}
+                </Typography>
+              </a>
+            </CardMedia>
+          }
           <CardContent
             className=""
             style={{

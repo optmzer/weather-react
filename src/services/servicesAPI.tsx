@@ -7,8 +7,8 @@
  * api.openweathermap.org/data/2.5/weather?q=London,uk
  * http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
  */
-const API_URL = "https://api.openweathermap.org/data/2.5/";
-
+const WEATHER_API_URI = "https://api.openweathermap.org/data/2.5/";
+const PEXELS_API_URI = "https://api.pexels.com/v1/search?query=";
 /**
  * Usage
  * ICON_URL + 10d.png = "http://openweathermap.org/img/w/10d.png"
@@ -16,7 +16,7 @@ const API_URL = "https://api.openweathermap.org/data/2.5/";
 export const ICON_URL = "https://openweathermap.org/img/w/";
 
 const headers: Headers = new Headers({
-  "Content-Type": "text/plain",
+  "Content-Type": "text/plain; charset=utf-8",
 });
 
 // assemble options object for toLocaleTimeString() method
@@ -75,7 +75,7 @@ export function convertMetersToMilesHours(meters: number): string {
 // ======
 
 export function getCurrentWeather(cityName: string): Promise<any> {
-  const uri = API_URL + "weather?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
+  const uri = WEATHER_API_URI + "weather?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
   return fetch(uri, {
     headers,
     method: "POST",
@@ -86,7 +86,7 @@ export function getCurrentWeather(cityName: string): Promise<any> {
 }
 
 export function getFiveDayForecast(cityName: string): Promise<any> {
-  const uri = API_URL + "forecast?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
+  const uri = WEATHER_API_URI + "forecast?q=" + cityName + "&APPID=" + process.env.REACT_APP_WEATHER_APPID;
   return fetch(uri, {
     headers,
     method: "POST",
@@ -138,16 +138,19 @@ export function getFiveDayForecast(cityName: string): Promise<any> {
  * }
  */
 export function getBackgroundPic(description: string): Promise<any> {
-  const PEXELS_URI = "https://api.pexels.com/v1/search?query=";
-  const queryURI = PEXELS_URI + description + "&per_page=15&page=1";
+  const queryURI = PEXELS_API_URI + description + "&per_page=5&page=1";
   const APIKEY: string = process.env.REACT_APP_PEXEL_API_KEY as string;
   return fetch(queryURI, {
     headers: new Headers({
       "Authorization": APIKEY,
-      "Content-Type": "text/plain",
+      "Content-Type": "text/plain; charset=utf-8",
     }),
     method: "GET",
   } ).then(
     (res) => res.json(),
   );
+}
+
+export function getRandomInt(max: number) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
