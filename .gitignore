@@ -1,13 +1,13 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+weather-app/node_modules
 
 # testing
-/coverage
+weather-app/coverage
 
 # production
-/build
+weather-app/build
 
 # misc
 .DS_Store
@@ -24,9 +24,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # Too big to commit
-/data
+weather-app/data
 city.list.json
 
 # secret stuff
-/secrets
+weather-app/secrets
 client_secret.json
