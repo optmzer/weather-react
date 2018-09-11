@@ -64,7 +64,7 @@ They will not be included in the production build so you can use them for things
 
 ## Available Scripts
 
-In the weather-app directory, you can run:
+In the weather-app\weather-app directory, you can run:
 
 ### `npm start`
 
