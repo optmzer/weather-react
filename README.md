@@ -21,8 +21,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 Dockerfile
 .dockerignore
 .gitignore
-my-app/
-  README.md
+Readme.md
+weather-app/
   package.json
   public/
     index.html
